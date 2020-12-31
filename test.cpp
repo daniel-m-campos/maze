@@ -162,7 +162,7 @@ void TestSearch() {
   std::cout.clear();  // Enable cout
 
   vector<vector<State>> solution{
-      {State::kPath, State::kObstacle, State::kEmpty, State::kEmpty,
+      {State::kStart, State::kObstacle, State::kEmpty, State::kEmpty,
        State::kEmpty, State::kEmpty},
       {State::kPath, State::kObstacle, State::kEmpty, State::kEmpty,
        State::kEmpty, State::kEmpty},
@@ -171,7 +171,7 @@ void TestSearch() {
       {State::kPath, State::kObstacle, State::kClosed, State::kPath,
        State::kPath, State::kPath},
       {State::kPath, State::kPath, State::kPath, State::kPath, State::kObstacle,
-       State::kPath}};
+       State::kFinish}};
 
   if (output != solution) {
     cout << "failed"
