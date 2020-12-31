@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+using std::abs;
 using std::cout;
 using std::ifstream;
 using std::istringstream;
@@ -11,12 +12,12 @@ using std::vector;
 
 enum class State { kEmpty, kObstacle };
 
-vector<State> ParseLine(const string &line) {
-  istringstream sline(line);
+vector<State> ParseLine(const string& line) {
+  istringstream line_stream(line);
   int n;
   char c;
   vector<State> row;
-  while (sline >> n >> c && c == ',') {
+  while (line_stream >> n >> c && c == ',') {
     if (n == 0) {
       row.push_back(State::kEmpty);
     } else {
@@ -26,7 +27,7 @@ vector<State> ParseLine(const string &line) {
   return row;
 }
 
-vector<vector<State>> ReadBoardFile(const string &path) {
+vector<vector<State>> ReadBoardFile(const string& path) {
   ifstream my_file(path);
   vector<vector<State>> board{};
   if (my_file) {
@@ -39,6 +40,13 @@ vector<vector<State>> ReadBoardFile(const string &path) {
   return board;
 }
 
+vector<vector<State>> Search(vector<vector<State>>& board, int first[],
+                             int second[]) {
+  cout << "No path found!" << '\n';
+  vector<vector<State>> new_board;
+  return new_board;
+}
+
 string CellString(State cell) {
   switch (cell) {
     case State::kObstacle:
@@ -48,8 +56,8 @@ string CellString(State cell) {
   }
 }
 
-void PrintBoard(const vector<vector<State>> &board) {
-  for (const auto &i : board) {
+void PrintBoard(const vector<vector<State>>& board) {
+  for (const auto& i : board) {
     for (auto j : i) {
       cout << CellString(j);
     }
@@ -58,6 +66,9 @@ void PrintBoard(const vector<vector<State>> &board) {
 }
 
 int main() {
-  auto board = ReadBoardFile("../1.board");
-  PrintBoard(board);
+  int init[]{0, 0};
+  int goal[]{4, 5};
+  auto board = ReadBoardFile("1.board");
+  auto solution = Search(board, init, goal);
+  PrintBoard(solution);
 }
