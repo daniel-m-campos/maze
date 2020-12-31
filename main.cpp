@@ -40,6 +40,13 @@ vector<vector<State>> ReadBoardFile(const string& path) {
   return board;
 }
 
+int Heuristic(int x1, int y1, int x2, int y2) {
+  return abs(x2 - x1) + abs(y2 - y1);
+}
+
+/**
+ * Implementation of A* search algorithm
+ */
 vector<vector<State>> Search(vector<vector<State>>& board, int first[],
                              int second[]) {
   cout << "No path found!" << '\n';
@@ -65,10 +72,40 @@ void PrintBoard(const vector<vector<State>>& board) {
   }
 }
 
+void TestHeuristic() {
+  cout << "----------------------------------------------------------"
+       << "\n";
+  cout << "Heuristic Function Test: ";
+  if (Heuristic(1, 2, 3, 4) != 4) {
+    cout << "failed"
+         << "\n";
+    cout << "\n"
+         << "Heuristic(1, 2, 3, 4) = " << Heuristic(1, 2, 3, 4) << "\n";
+    cout << "Correct result: 4"
+         << "\n";
+    cout << "\n";
+  } else if (Heuristic(2, -1, 4, -7) != 8) {
+    cout << "TestHeuristic Failed"
+         << "\n";
+    cout << "\n"
+         << "Heuristic(2, -1, 4, -7) = " << Heuristic(2, -1, 4, -7) << "\n";
+    cout << "Correct result: 8"
+         << "\n";
+    cout << "\n";
+  } else {
+    cout << "passed"
+         << "\n";
+  }
+  cout << "----------------------------------------------------------"
+       << "\n";
+}
+
 int main() {
-  int init[]{0, 0};
-  int goal[]{4, 5};
+  int init[2]{0, 0};
+  int goal[2]{4, 5};
   auto board = ReadBoardFile("1.board");
   auto solution = Search(board, init, goal);
   PrintBoard(solution);
+  // Tests
+  TestHeuristic();
 }
