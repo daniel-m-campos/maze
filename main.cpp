@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -7,10 +8,11 @@ using std::abs;
 using std::cout;
 using std::ifstream;
 using std::istringstream;
+using std::sort;
 using std::string;
 using std::vector;
 
-enum class State { kEmpty, kObstacle, kClosed };
+enum class State { kEmpty, kObstacle, kClosed, kPath };
 
 vector<State> ParseLine(const string& line) {
   istringstream line_stream(line);
@@ -45,6 +47,8 @@ bool Compare(vector<int> a, vector<int> b) {
   return a[2] + a[3] > b[2] + b[3];
 }
 
+void CellSort(vector<vector<int>>* v) { sort(v->begin(), v->end(), Compare); }
+
 int Heuristic(int x1, int y1, int x2, int y2) {
   return abs(x2 - x1) + abs(y2 - y1);
 }
@@ -64,8 +68,20 @@ vector<vector<State>> Search(vector<vector<State>>& grid, const int init[2],
   auto g = 0;
   auto h = Heuristic(x1, y1, x2, y2);
   vector<vector<int>> open_nodes;
-
   AddToOpen(x1, y1, g, h, open_nodes, grid);
+
+  while (!open_nodes.empty()) {
+    CellSort(&open_nodes);
+    auto current_node = open_nodes.back();
+    open_nodes.pop_back();
+    auto x = current_node[0];
+    auto y = current_node[1];
+    grid[x][y] = State::kPath;
+    if (x == x2 && y == y2) {
+      return grid;
+    }
+  }
+
   cout << "No path found!" << '\n';
   return vector<vector<State>>{};
 }
@@ -100,4 +116,5 @@ int main() {
   TestHeuristic();
   TestAddToOpen();
   TestCompare();
+  TestSearch();
 }
