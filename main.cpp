@@ -46,7 +46,7 @@ int Heuristic(int x1, int y1, int x2, int y2) {
 
 void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& open_nodes,
                vector<vector<State>>& board) {
-  open_nodes.push_back({x, y, g, h});
+  open_nodes.push_back(vector<int>{x, y, g, h});
   board[x][y] = State::kClosed;
 }
 
@@ -56,8 +56,7 @@ void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& open_nodes,
 vector<vector<State>> Search(vector<vector<State>>& board, int init[2],
                              int goal[2]) {
   cout << "No path found!" << '\n';
-  vector<vector<State>> new_board;
-  return new_board;
+  return vector<vector<State>>{};
 }
 
 string CellString(State cell) {
