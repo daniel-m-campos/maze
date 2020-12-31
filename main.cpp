@@ -14,6 +14,8 @@ using std::vector;
 
 enum class State { kEmpty, kObstacle, kClosed, kPath };
 
+const int delta[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+
 vector<State> ParseLine(const string& line) {
   istringstream line_stream(line);
   int n;
@@ -54,8 +56,8 @@ int Heuristic(int x1, int y1, int x2, int y2) {
 }
 
 bool CheckValidCell(int x, int y, vector<vector<State>>& grid) {
-  bool x_valid = x >= 0 && x <= grid.size();
-  bool y_valid = y >= 0 && y <= grid.size();
+  bool x_valid = x >= 0 && x < grid.size();
+  bool y_valid = y >= 0 && y < grid[0].size();
   return (x_valid && y_valid && grid[x][y] == State::kEmpty);
 }
 
@@ -65,8 +67,25 @@ void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& open_nodes,
   grid[x][y] = State::kClosed;
 }
 
-vector<vector<State>> Search(vector<vector<State>>& grid, const int init[2],
-                             const int goal[2]) {
+void ExpandNeighbors(const vector<int>& current_node, int goal[2],
+                     vector<vector<int>>& open_nodes,
+                     vector<vector<State>>& grid) {
+  // FIXME: this is gross
+  auto x = current_node[0];
+  auto y = current_node[1];
+  auto g = current_node[2];
+  for (auto [dx, dy] : delta) {
+    auto x2 = x + dx;
+    auto y2 = y + dy;
+    if (CheckValidCell(x2, y2, grid)) {
+      auto h2 = Heuristic(x2, y2, goal[0], goal[1]);
+      AddToOpen(x2, y2, g + 1, h2, open_nodes, grid);
+    }
+  }
+}
+
+vector<vector<State>> Search(vector<vector<State>>& grid, int init[2],
+                             int goal[2]) {
   auto x1 = init[0];
   auto y1 = init[1];
   auto x2 = goal[0];
@@ -86,6 +105,7 @@ vector<vector<State>> Search(vector<vector<State>>& grid, const int init[2],
     if (x == x2 && y == y2) {
       return grid;
     }
+    ExpandNeighbors(current_node, goal, open_nodes, grid);
   }
 
   cout << "No path found!" << '\n';
@@ -125,4 +145,5 @@ int main() {
   TestCompare();
   TestSearch();
   TestCheckValidCell();
+  TestExpandNeighbors();
 }
