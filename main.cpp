@@ -53,6 +53,12 @@ int Heuristic(int x1, int y1, int x2, int y2) {
   return abs(x2 - x1) + abs(y2 - y1);
 }
 
+bool CheckValidCell(int x, int y, vector<vector<State>>& grid) {
+  bool x_valid = x >= 0 && x <= grid.size();
+  bool y_valid = y >= 0 && y <= grid.size();
+  return (x_valid && y_valid && grid[x][y] == State::kEmpty);
+}
+
 void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& open_nodes,
                vector<vector<State>>& grid) {
   open_nodes.push_back(vector<int>{x, y, g, h});
@@ -90,6 +96,8 @@ string CellString(State cell) {
   switch (cell) {
     case State::kObstacle:
       return "⛰️   ";
+    case State::kPath:
+      return "🚗   ";
     default:
       return "0   ";
   }
@@ -109,12 +117,12 @@ void PrintBoard(const vector<vector<State>>& board) {
 int main() {
   int init[2]{0, 0};
   int goal[2]{4, 5};
-  auto board = ReadBoardFile("../1.board");
+  auto board = ReadBoardFile("1.board");
   auto solution = Search(board, init, goal);
   PrintBoard(solution);
-  // Tests
   TestHeuristic();
   TestAddToOpen();
   TestCompare();
   TestSearch();
+  TestCheckValidCell();
 }
