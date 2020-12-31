@@ -40,6 +40,11 @@ vector<vector<State>> ReadBoardFile(const string& path) {
   return board;
 }
 
+bool Compare(vector<int> a, vector<int> b) {
+  // FIXME: use a struct here
+  return a[2] + a[3] > b[2] + b[3];
+}
+
 int Heuristic(int x1, int y1, int x2, int y2) {
   return abs(x2 - x1) + abs(y2 - y1);
 }
@@ -50,8 +55,8 @@ void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& open_nodes,
   grid[x][y] = State::kClosed;
 }
 
-vector<vector<State>> Search(vector<vector<State>>& grid,  const int init[2],
-                              const int goal[2]) {
+vector<vector<State>> Search(vector<vector<State>>& grid, const int init[2],
+                             const int goal[2]) {
   auto x1 = init[0];
   auto y1 = init[1];
   auto x2 = goal[0];
@@ -94,4 +99,5 @@ int main() {
   // Tests
   TestHeuristic();
   TestAddToOpen();
+  TestCompare();
 }
