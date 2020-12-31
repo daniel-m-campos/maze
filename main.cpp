@@ -45,16 +45,22 @@ int Heuristic(int x1, int y1, int x2, int y2) {
 }
 
 void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& open_nodes,
-               vector<vector<State>>& board) {
+               vector<vector<State>>& grid) {
   open_nodes.push_back(vector<int>{x, y, g, h});
-  board[x][y] = State::kClosed;
+  grid[x][y] = State::kClosed;
 }
 
-/**
- * Implementation of A* search algorithm
- */
-vector<vector<State>> Search(vector<vector<State>>& board, int init[2],
-                             int goal[2]) {
+vector<vector<State>> Search(vector<vector<State>>& grid,  const int init[2],
+                              const int goal[2]) {
+  auto x1 = init[0];
+  auto y1 = init[1];
+  auto x2 = goal[0];
+  auto y2 = goal[1];
+  auto g = 0;
+  auto h = Heuristic(x1, y1, x2, y2);
+  vector<vector<int>> open_nodes;
+
+  AddToOpen(x1, y1, g, h, open_nodes, grid);
   cout << "No path found!" << '\n';
   return vector<vector<State>>{};
 }
@@ -82,7 +88,7 @@ void PrintBoard(const vector<vector<State>>& board) {
 int main() {
   int init[2]{0, 0};
   int goal[2]{4, 5};
-  auto board = ReadBoardFile("1.board");
+  auto board = ReadBoardFile("../1.board");
   auto solution = Search(board, init, goal);
   PrintBoard(solution);
   // Tests

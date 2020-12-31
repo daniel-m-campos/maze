@@ -63,9 +63,9 @@ void TestAddToOpen() {
                               State::kEmpty, State::kEmpty, State::kEmpty},
                              {State::kClosed, State::kObstacle, State::kEmpty,
                               State::kEmpty, State::kEmpty, State::kEmpty},
-                             {State::kEmpty, State::kObstacle, State::kEmpty,
+                             {State::kClosed, State::kObstacle, State::kEmpty,
                               State::kEmpty, State::kEmpty, State::kEmpty},
-                             {State::kEmpty, State::kEmpty, State::kEmpty,
+                             {State::kClosed, State::kClosed, State::kEmpty,
                               State::kEmpty, State::kObstacle, State::kEmpty}};
   vector<vector<State>> solution_grid = grid;
   solution_grid[3][0] = State::kClosed;
