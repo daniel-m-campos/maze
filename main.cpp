@@ -10,7 +10,7 @@ using std::istringstream;
 using std::string;
 using std::vector;
 
-enum class State { kEmpty, kObstacle };
+enum class State { kEmpty, kObstacle, kClosed };
 
 vector<State> ParseLine(const string& line) {
   istringstream line_stream(line);
@@ -44,11 +44,17 @@ int Heuristic(int x1, int y1, int x2, int y2) {
   return abs(x2 - x1) + abs(y2 - y1);
 }
 
+void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& open_nodes,
+               vector<vector<State>>& board) {
+  open_nodes.push_back({x, y, g, h});
+  board[x][y] = State::kClosed;
+}
+
 /**
  * Implementation of A* search algorithm
  */
-vector<vector<State>> Search(vector<vector<State>>& board, int first[],
-                             int second[]) {
+vector<vector<State>> Search(vector<vector<State>>& board, int init[2],
+                             int goal[2]) {
   cout << "No path found!" << '\n';
   vector<vector<State>> new_board;
   return new_board;
@@ -72,33 +78,7 @@ void PrintBoard(const vector<vector<State>>& board) {
   }
 }
 
-void TestHeuristic() {
-  cout << "----------------------------------------------------------"
-       << "\n";
-  cout << "Heuristic Function Test: ";
-  if (Heuristic(1, 2, 3, 4) != 4) {
-    cout << "failed"
-         << "\n";
-    cout << "\n"
-         << "Heuristic(1, 2, 3, 4) = " << Heuristic(1, 2, 3, 4) << "\n";
-    cout << "Correct result: 4"
-         << "\n";
-    cout << "\n";
-  } else if (Heuristic(2, -1, 4, -7) != 8) {
-    cout << "TestHeuristic Failed"
-         << "\n";
-    cout << "\n"
-         << "Heuristic(2, -1, 4, -7) = " << Heuristic(2, -1, 4, -7) << "\n";
-    cout << "Correct result: 8"
-         << "\n";
-    cout << "\n";
-  } else {
-    cout << "passed"
-         << "\n";
-  }
-  cout << "----------------------------------------------------------"
-       << "\n";
-}
+#include "test.cpp"
 
 int main() {
   int init[2]{0, 0};
@@ -108,4 +88,5 @@ int main() {
   PrintBoard(solution);
   // Tests
   TestHeuristic();
+  TestAddToOpen();
 }
