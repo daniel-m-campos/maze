@@ -1,0 +1,27 @@
+#ifndef MAZE__PATH_FINDER_H_
+#define MAZE__PATH_FINDER_H_
+
+#include <vector>
+
+#include "grid.h"
+
+class PathFinder {
+ private:
+  std::vector<Node> open_;
+  Grid original_grid_;
+  Grid grid_;
+  const int deltas_[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+
+  void AddToOpen(Node node);
+  void ExpandNeighbors(const Node &current, const Point &goal);
+  static void CellSort(std::vector<Node> *v);
+  Node Current();
+
+ public:
+  explicit PathFinder(Grid grid);
+  static int Heuristic(const Point &p1, const Point &p2);
+  static bool Compare(Node a, Node b);
+  Grid Search(Point start, Point goal);
+};
+
+#endif  // MAZE__PATH_FINDER_H_
