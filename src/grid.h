@@ -14,9 +14,9 @@ struct Point {
 };
 
 struct Node {
-  Point point;
+  Point point{};
   int g = 0;
-  int h;
+  int h{};
 };
 
 class Grid {

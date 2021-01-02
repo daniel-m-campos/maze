@@ -3,7 +3,13 @@ project(Maze)
 
 set(CMAKE_CXX_STANDARD 17)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/1.board
-        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+add_subdirectory(src)
+add_subdirectory(test)
 
-add_executable(Maze main.cpp)
+include(FetchContent)
+FetchContent_Declare(
+        catch
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v2.x
+)
+FetchContent_MakeAvailable(catch)
