@@ -66,51 +66,23 @@ TEST_CASE("AddToOpen Function Test", "[AddToOpenTests]") {
   SECTION("Open is updated") {
     CHECK(path_finder.GetOpenNodes() == solution_open);
   }
-  SECTION("Grid is updated") {
-    CHECK(path_finder.GetGrid() == solution_grid);
+  SECTION("Grid is updated") { CHECK(path_finder.GetGrid() == solution_grid); }
+}
+
+TEST_CASE("Compare Function Test", "[CompareTests]") {
+  SECTION("test_1 <= test_2") {
+    Node test_1{1, 2, 5, 6};
+    Node test_2{1, 3, 5, 7};
+    CHECK(PathFinder::Compare(test_1, test_2) == 0);
+  }
+  SECTION("test_3 > test_4") {
+    Node test_3{1, 2, 5, 8};
+    Node test_4{1, 3, 5, 7};
+    CHECK(PathFinder::Compare(test_3, test_4) == 1);
   }
 }
 
 // FIXME: Convert these to Catch tests
-// void TestCompare() {
-//  std::cout << "----------------------------------------------------------"
-//            << "\n";
-//  std::cout << "Compare Function Test: ";
-//  Node test_1{1, 2, 5, 6};
-//  Node test_2{1, 3, 5, 7};
-//  Node test_3{1, 2, 5, 8};
-//  Node test_4{1, 3, 5, 7};
-//  if (PathFinder::Compare(test_1, test_2)) {
-//    std::cout << "failed"
-//              << "\n";
-//    std::cout << "\n"
-//              << "a = ";
-//    PrintVector(test_1);
-//    std::cout << "b = ";
-//    PrintVector(test_2);
-//    std::cout << "Compare(a, b): " << Compare(test_1, test_2) << "\n";
-//    std::cout << "Correct answer: 0"
-//              << "\n";
-//    std::cout << "\n";
-//  } else if (!Compare(test_3, test_4)) {
-//    std::cout << "failed"
-//              << "\n";
-//    std::cout << "\n"
-//              << "a = ";
-//    PrintVector(test_3);
-//    std::cout << "b = ";
-//    PrintVector(test_4);
-//    std::cout << "Compare(a, b): " << Compare(test_3, test_4) << "\n";
-//    std::cout << "Correct answer: 1"
-//              << "\n";
-//    std::cout << "\n";
-//  } else {
-//    std::cout << "passed"
-//              << "\n";
-//  }
-//  return;
-//}
-//
 // void TestSearch() {
 //  std::cout << "----------------------------------------------------------"
 //            << "\n";
