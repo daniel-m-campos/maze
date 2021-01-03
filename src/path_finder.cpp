@@ -37,15 +37,18 @@ void PathFinder::ExpandNeighbors(const Node &current, const Point &goal) {
 }
 
 bool PathFinder::Compare(Node a, Node b) { return a.g + a.h > b.g + b.h; }
+
 void PathFinder::CellSort(std::vector<Node> *v) {
   std::sort(v->begin(), v->end(), Compare);
 }
+
 Node PathFinder::Current() {
   CellSort(&open_);
   auto next = open_.back();
   open_.pop_back();
   return next;
 }
+
 Grid PathFinder::Search(Point start, Point goal) {
   grid_ = original_grid_;
   open_ = std::vector<Node>();
@@ -62,5 +65,7 @@ Grid PathFinder::Search(Point start, Point goal) {
   std::cout << "No path found!" << '\n';
   return Grid();
 }
-std::vector<Node>& PathFinder::GetOpenNodes() { return open_; }
-Grid& PathFinder::GetGrid() { return grid_; }
+
+std::vector<Node> &PathFinder::GetOpenNodes() { return open_; }
+
+Grid &PathFinder::GetGrid() { return grid_; }
