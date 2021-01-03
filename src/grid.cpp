@@ -78,3 +78,6 @@ void Grid::SetGoal(Point start, Point finish) {
   grid_[start.x][start.y] = State::kStart;
   grid_[finish.x][finish.y] = State::kFinish;
 }
+bool Grid::operator==(const Grid& other) const {
+  return grid_ == other.grid_;
+}

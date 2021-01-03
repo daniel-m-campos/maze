@@ -5,9 +5,17 @@
 
 #include "grid.h"
 
-PathFinder::PathFinder() { original_grid_ = Grid(); }
+PathFinder::PathFinder() {
+  original_grid_ = Grid();
+  grid_ = original_grid_;
+  open_ = std::vector<Node>();
+}
 
-PathFinder::PathFinder(Grid grid) { original_grid_ = grid; }
+PathFinder::PathFinder(Grid grid) {
+  original_grid_ = grid;
+  grid_ = original_grid_;
+  open_ = std::vector<Node>();
+}
 
 int PathFinder::Heuristic(const Point &p1, const Point &p2) {
   return abs(p1.x - p2.x) + abs(p1.y - p2.y);
@@ -54,3 +62,5 @@ Grid PathFinder::Search(Point start, Point goal) {
   std::cout << "No path found!" << '\n';
   return Grid();
 }
+std::vector<Node>& PathFinder::GetOpenNodes() { return open_; }
+Grid& PathFinder::GetGrid() { return grid_; }

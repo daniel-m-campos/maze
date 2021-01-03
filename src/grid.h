@@ -17,6 +17,9 @@ struct Node {
   Point point{};
   int g = 0;
   int h{};
+  bool operator==(const Node& other) const {
+    return point == other.point && g == other.g && h == other.h;
+  }
 };
 
 class Grid {
@@ -24,11 +27,11 @@ class Grid {
   std::vector<std::vector<State>> grid_;
   static std::vector<State> ParseLine(const std::string& line);
   static std::vector<std::vector<State>> ReadBoardFile(const std::string& path);
- public:
 
+ public:
   Grid() { grid_ = std::vector<std::vector<State>>{}; };
   explicit Grid(const std::string& path);
-  Grid(const std::vector<std::vector<State>>& grid);
+  explicit Grid(const std::vector<std::vector<State>>& grid);
   State GetState(Point point);
   bool IsEmpty(Point point);
   void SetAsPath(Point point);
@@ -39,6 +42,7 @@ class Grid {
   int NumColumns() { return grid_[0].size(); };
   static std::string CellString(State cell);
   void Print();
+  bool operator==(const Grid& other) const;
 };
 
 #endif  // MAZE__GRID_H_
