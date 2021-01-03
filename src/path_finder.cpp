@@ -5,6 +5,8 @@
 
 #include "grid.h"
 
+PathFinder::PathFinder() { original_grid_ = Grid(); }
+
 PathFinder::PathFinder(Grid grid) { original_grid_ = grid; }
 
 int PathFinder::Heuristic(const Point &p1, const Point &p2) {
@@ -27,7 +29,6 @@ void PathFinder::ExpandNeighbors(const Node &current, const Point &goal) {
 }
 
 bool PathFinder::Compare(Node a, Node b) { return a.g + a.h > b.g + b.h; }
-
 void PathFinder::CellSort(std::vector<Node> *v) {
   std::sort(v->begin(), v->end(), Compare);
 }
