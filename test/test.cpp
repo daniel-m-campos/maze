@@ -73,12 +73,12 @@ TEST_CASE("Compare Function Test", "[CompareTests]") {
   SECTION("test_1 <= test_2") {
     Node test_1{1, 2, 5, 6};
     Node test_2{1, 3, 5, 7};
-    CHECK(PathFinder::Compare(test_1, test_2) == 0);
+    CHECK(PathFinder::Compare(test_1, test_2) == false);
   }
   SECTION("test_3 > test_4") {
     Node test_3{1, 2, 5, 8};
     Node test_4{1, 3, 5, 7};
-    CHECK(PathFinder::Compare(test_3, test_4) == 1);
+    CHECK(PathFinder::Compare(test_3, test_4) == true);
   }
 }
 
@@ -103,93 +103,22 @@ TEST_CASE("Search Function Test", "[SearchTests]") {
   CHECK(actual == expected);
 }
 
+TEST_CASE("IsValid Function Test", "[CheckValidCellTests]") {
+  Grid grid({{State::kClosed, State::kObstacle, State::kEmpty, State::kEmpty,
+              State::kEmpty, State::kEmpty},
+             {State::kClosed, State::kObstacle, State::kEmpty, State::kEmpty,
+              State::kEmpty, State::kEmpty},
+             {State::kClosed, State::kObstacle, State::kEmpty, State::kEmpty,
+              State::kEmpty, State::kEmpty},
+             {State::kClosed, State::kObstacle, State::kEmpty, State::kEmpty,
+              State::kEmpty, State::kEmpty},
+             {State::kClosed, State::kClosed, State::kEmpty, State::kEmpty,
+              State::kObstacle, State::kEmpty}});
+  CHECK(grid.IsValid({0, 0}) == false);
+  CHECK(grid.IsValid({4, 2}) == true);
+}
+
 // FIXME: Convert these to Catch tests
-// void TestSearch() {
-//  std::cout << "----------------------------------------------------------"
-//            << "\n";
-//  std::cout << "Search Function Test: ";
-//  int init[2]{0, 0};
-//  int goal[2]{4, 5};
-//  auto board = ReadBoardFile("1.board");
-//
-//  std::std::cout.setstate(std::ios_base::failbit);  // Disable std::cout
-//  auto output = Search(board, init, goal);
-//  std::std::cout.clear();  // Enable std::cout
-//
-//  vector<vector<State>> solution{
-//      {State::kStart, State::kObstacle, State::kEmpty, State::kEmpty,
-//       State::kEmpty, State::kEmpty},
-//      {State::kPath, State::kObstacle, State::kEmpty, State::kEmpty,
-//       State::kEmpty, State::kEmpty},
-//      {State::kPath, State::kObstacle, State::kEmpty, State::kClosed,
-//       State::kClosed, State::kClosed},
-//      {State::kPath, State::kObstacle, State::kClosed, State::kPath,
-//       State::kPath, State::kPath},
-//      {State::kPath, State::kPath, State::kPath, State::kPath,
-//      State::kObstacle,
-//       State::kFinish}};
-//
-//  if (output != solution) {
-//    std::cout << "failed"
-//              << "\n";
-//    std::cout << "Search(board, {0,0}, {4,5})"
-//              << "\n";
-//    std::cout << "Solution board: "
-//              << "\n";
-//    PrintVectorOfVectors(solution);
-//    std::cout << "Your board: "
-//              << "\n";
-//    PrintVectorOfVectors(output);
-//    std::cout << "\n";
-//  } else {
-//    std::cout << "passed"
-//              << "\n";
-//  }
-//  return;
-//}
-//
-// void TestCheckValidCell() {
-//  std::cout << "----------------------------------------------------------"
-//            << "\n";
-//  std::cout << "CheckValidCell Function Test: ";
-//  vector<vector<State>> grid{{State::kClosed, State::kObstacle, State::kEmpty,
-//                              State::kEmpty, State::kEmpty, State::kEmpty},
-//                             {State::kClosed, State::kObstacle, State::kEmpty,
-//                              State::kEmpty, State::kEmpty, State::kEmpty},
-//                             {State::kClosed, State::kObstacle, State::kEmpty,
-//                              State::kEmpty, State::kEmpty, State::kEmpty},
-//                             {State::kClosed, State::kObstacle, State::kEmpty,
-//                              State::kEmpty, State::kEmpty, State::kEmpty},
-//                             {State::kClosed, State::kClosed, State::kEmpty,
-//                              State::kEmpty, State::kObstacle,
-//                              State::kEmpty}};
-//
-//  if (CheckValidCell(0, 0, grid)) {
-//    std::cout << "failed"
-//              << "\n";
-//    std::cout << "\n"
-//              << "Test grid is: "
-//              << "\n";
-//    PrintVectorOfVectors(grid);
-//    std::cout << "Cell checked: (0, 0)"
-//              << "\n";
-//    std::cout << "\n";
-//  } else if (!CheckValidCell(4, 2, grid)) {
-//    std::cout << "failed"
-//              << "\n";
-//    std::cout << "\n"
-//              << "Test grid is: "
-//              << "\n";
-//    PrintVectorOfVectors(grid);
-//    std::cout << "Cell checked: (4, 2)"
-//              << "\n";
-//    std::cout << "\n";
-//  } else {
-//    std::cout << "passed"
-//              << "\n";
-//  }
-//}
-//
 // void TestExpandNeighbors() {
 //  std::cout << "----------------------------------------------------------"
 //            << "\n";

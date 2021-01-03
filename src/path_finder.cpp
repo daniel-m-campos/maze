@@ -29,7 +29,7 @@ void PathFinder::AddToOpen(Node node) {
 void PathFinder::ExpandNeighbors(const Node &current, const Point &goal) {
   for (auto [dx, dy] : deltas_) {
     Point adjacent{current.point.x + dx, current.point.y + dy};
-    if (grid_.CheckValidCell(adjacent)) {
+    if (grid_.IsValid(adjacent)) {
       auto h2 = Heuristic(adjacent, goal);
       AddToOpen(Node{adjacent, current.g + 1, h2});
     }

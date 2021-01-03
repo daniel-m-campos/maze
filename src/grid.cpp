@@ -44,7 +44,7 @@ bool Grid::IsEmpty(Point point) { return GetState(point) == State::kEmpty; }
 
 void Grid::Close(Point point) { grid_[point.x][point.y] = State::kClosed; }
 
-bool Grid::CheckValidCell(const Point point) {
+bool Grid::IsValid(Point point) {
   bool x_valid = point.x >= 0 && point.x < NumRows();
   bool y_valid = point.y >= 0 && point.y < NumColumns();
   return (x_valid && y_valid && IsEmpty(point));

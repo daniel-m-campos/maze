@@ -37,7 +37,7 @@ class Grid {
   void SetAsPath(Point point);
   void SetGoal(Point start, Point finish);
   void Close(Point point);
-  bool CheckValidCell(Point point);
+  bool IsValid(Point point);
   int NumRows() { return grid_.size(); };
   int NumColumns() { return grid_[0].size(); };
   static std::string CellString(State cell);
