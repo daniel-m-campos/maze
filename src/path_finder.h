@@ -11,17 +11,16 @@ class PathFinder {
   Grid original_grid_;
   Grid grid_;
   const int deltas_[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
-
-  void ExpandNeighbors(const Node &current, const Point &goal);
-  static void CellSort(std::vector<Node> *v);
-  Node Current();
-
  public:
+
   PathFinder();
   explicit PathFinder(Grid grid);
   void AddToOpen(Node node);
+  void ExpandNeighbors(const Node &current, const Point &goal);
   static int Heuristic(const Point &p1, const Point &p2);
   static bool Compare(Node a, Node b);
+  static void CellSort(std::vector<Node> *v);
+  Node Current();
   Grid Search(Point start, Point goal);
   std::vector<Node> &GetOpenNodes();
   Grid &GetGrid();
