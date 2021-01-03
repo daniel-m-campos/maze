@@ -18,9 +18,10 @@ class PathFinder {
   Node Current();
 
  public:
-  explicit PathFinder(Grid grid);
+  PathFinder();
   static int Heuristic(const Point &p1, const Point &p2);
   static bool Compare(Node a, Node b);
+  explicit PathFinder(Grid grid);
   Grid Search(Point start, Point goal);
 };
 
