@@ -82,6 +82,27 @@ TEST_CASE("Compare Function Test", "[CompareTests]") {
   }
 }
 
+TEST_CASE("Search Function Test", "[SearchTests]") {
+  auto board = Grid("1.board");
+  auto path_finder = PathFinder(board);
+  auto actual = path_finder.Search({0, 0}, {4, 5});
+  Grid expected({{State::kStart, State::kObstacle, State::kEmpty, State::kEmpty,
+                  State::kEmpty, State::kEmpty},
+                 {State::kPath, State::kObstacle, State::kEmpty, State::kEmpty,
+                  State::kEmpty, State::kEmpty},
+                 {State::kPath, State::kObstacle, State::kEmpty, State::kClosed,
+                  State::kClosed, State::kClosed},
+                 {State::kPath, State::kObstacle, State::kClosed, State::kPath,
+                  State::kPath, State::kPath},
+                 {State::kPath, State::kPath, State::kPath, State::kPath,
+                  State::kObstacle, State::kFinish}});
+  std::cout << "===== Actual =====" << std::endl;
+  actual.Print();
+  std::cout << "===== Expected =====" << std::endl;
+  expected.Print();
+  CHECK(actual == expected);
+}
+
 // FIXME: Convert these to Catch tests
 // void TestSearch() {
 //  std::cout << "----------------------------------------------------------"
