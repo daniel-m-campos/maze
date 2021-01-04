@@ -44,14 +44,14 @@ Point GetPoint(const std::string& name) {
 
 int main() {
   std::cout << "👋 Welcome to the Maze!\n";
+
   Grid grid = GetGrid();
   Point start = GetPoint("start");
   Point goal = GetPoint("goal");
 
   PathFinder path_finder(grid);
-  std::cout << "🔎 Searching...  \n";
+  std::cout << "🔎 Searching...\n";
   auto solution = path_finder.Search(start, goal);
-  std::cout << "🤖 Found a path!\n";
   solution.Print();
 
   std::cout << "Until next time! 👍";

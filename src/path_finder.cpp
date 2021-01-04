@@ -58,11 +58,12 @@ Grid PathFinder::Search(Point start, Point goal) {
     grid_.SetAsPath(current.point);
     if (current.point == goal) {
       grid_.SetGoal(start, goal);
+      std::cout << "🤖 Found a path!\n";
       return grid_;
     }
     ExpandNeighbors(current, goal);
   }
-  std::cout << "No path found!" << '\n';
+  std::cout << "No path found... 💩\n";
   return Grid();
 }
 
