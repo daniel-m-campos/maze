@@ -53,15 +53,15 @@ bool Grid::IsValid(Point point) {
 std::string Grid::CellString(State cell) {
   switch (cell) {
     case State::kObstacle:
-      return "⛰️   ";
+      return "👾️  ";
     case State::kPath:
-      return "🚗   ";
+      return "🚀  ";
     case State::kFinish:
-      return "🏁   ";
+      return "🏁  ";
     case State::kStart:
-      return "🚦   ";
+      return "🚦  ";
     default:
-      return "0   ";
+      return "🌌  ";
   }
 }
 
@@ -79,6 +79,5 @@ void Grid::SetGoal(Point start, Point finish) {
   grid_[finish.x][finish.y] = State::kFinish;
 }
 
-bool Grid::operator==(const Grid& other) const {
-  return grid_ == other.grid_;
-}
+bool Grid::operator==(const Grid& other) const { return grid_ == other.grid_; }
+
