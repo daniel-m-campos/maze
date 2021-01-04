@@ -83,7 +83,7 @@ TEST_CASE("Compare Function Test", "[CompareTests]") {
 }
 
 TEST_CASE("Search Function Test", "[SearchTests]") {
-  auto board = Grid("1.board");
+  auto board = Grid("5x6.board");
   auto path_finder = PathFinder(board);
   auto actual = path_finder.Search({0, 0}, {4, 5});
   Grid expected({{State::kStart, State::kObstacle, State::kEmpty, State::kEmpty,
