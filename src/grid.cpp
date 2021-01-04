@@ -20,14 +20,15 @@ std::vector<State> Grid::ParseLine(const std::string& line) {
 }
 
 std::vector<std::vector<State>> Grid::ReadBoardFile(const std::string& path) {
-  std::ifstream my_file(path);
+  std::ifstream file(path);
   std::vector<std::vector<State>> board{};
-  if (my_file) {
-    std::string line;
-    while (getline(my_file, line)) {
-      std::vector<State> row = ParseLine(line);
-      board.push_back(row);
-    }
+  if (!file) {
+    throw std::runtime_error("Could not open " + path);
+  }
+  std::string line;
+  while (getline(file, line)) {
+    std::vector<State> row = ParseLine(line);
+    board.push_back(row);
   }
   return board;
 }
@@ -80,4 +81,3 @@ void Grid::SetGoal(Point start, Point finish) {
 }
 
 bool Grid::operator==(const Grid& other) const { return grid_ == other.grid_; }
-
