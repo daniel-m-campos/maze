@@ -1,6 +1,6 @@
 # Maze
 
-A small implementation of the A* search algorithm for path finding to practice C++, CMake, and Catch2.
+Solve mazes using A* search algorithm.
 
 ```bash
 👋 Welcome to the Maze!
@@ -24,6 +24,7 @@ Until next time! 👍
 ```
 
 ## Installing
+
 ```bash
 git clone git@github.com:daniel-m-campos/maze.git
 cd maze
@@ -34,7 +35,9 @@ make
 ```
 
 ## Running
+
 Once installed:
+
 ```bash
 cd src # from build directory
 ./MAZE
