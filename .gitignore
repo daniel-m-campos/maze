@@ -31,3 +31,8 @@
 *.out
 *.app
 cmake-build-debug/
+build/
+
+# Config files
+.cache/
+.vscode/

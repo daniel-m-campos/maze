@@ -1,10 +1,10 @@
-#define CATCH_CONFIG_MAIN
+#include <catch2/catch_test_macros.hpp>
 #include <iostream>
 #include <vector>
 
-#include "catch2/catch.hpp"
-using std::vector;
 #include "path_finder.h"
+
+using std::vector;
 
 void PrintVector(const vector<int>& v) {
   std::cout << "{ ";
