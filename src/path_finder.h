@@ -6,13 +6,7 @@
 #include "grid.h"
 
 class PathFinder {
- private:
-  std::vector<Node> open_;
-  Grid original_grid_;
-  Grid grid_;
-  const int deltas_[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
  public:
-
   PathFinder();
   explicit PathFinder(Grid grid);
   void AddToOpen(Node node);
@@ -24,6 +18,12 @@ class PathFinder {
   Grid Search(Point start, Point goal);
   std::vector<Node> &GetOpenNodes();
   Grid &GetGrid();
+
+ private:
+  std::vector<Node> open_;
+  Grid original_grid_;
+  Grid grid_;
+  const int deltas_[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
 };
 
 #endif  // MAZE__PATH_FINDER_H_

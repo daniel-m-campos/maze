@@ -23,11 +23,6 @@ struct Node {
 };
 
 class Grid {
- private:
-  std::vector<std::vector<State>> grid_;
-  static std::vector<State> ParseLine(const std::string& line);
-  static std::vector<std::vector<State>> ReadBoardFile(const std::string& path);
-
  public:
   Grid() { grid_ = std::vector<std::vector<State>>{}; };
   explicit Grid(const std::string& path);
@@ -43,6 +38,11 @@ class Grid {
   static std::string CellString(State cell);
   void Print();
   bool operator==(const Grid& other) const;
+
+ private:
+  std::vector<std::vector<State>> grid_;
+  static std::vector<State> ParseLine(const std::string& line);
+  static std::vector<std::vector<State>> ReadBoardFile(const std::string& path);
 };
 
 #endif  // MAZE__GRID_H_
