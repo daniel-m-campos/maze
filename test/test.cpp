@@ -39,13 +39,13 @@ void PrintVectorOfVectors(const vector<vector<State>>& v) {
 
 TEST_CASE("Heuristic Function Test", "[HeuristicTests]") {
   PathFinder path_finder;
-  CHECK(path_finder.Heuristic(Point{1, 2}, Point{3, 4}) == 4);
-  CHECK(path_finder.Heuristic(Point{2, -1}, Point{4, -7}) == 8);
+  CHECK(path_finder.Heuristic(Location{1, 2}, Location{3, 4}) == 4);
+  CHECK(path_finder.Heuristic(Location{2, -1}, Location{4, -7}) == 8);
 }
 
 TEST_CASE("AddToOpen Function Test", "[AddToOpenTests]") {
-  vector<Node> open;
-  vector<Node> solution_open = open;
+  vector<Cell> open;
+  vector<Cell> solution_open = open;
   solution_open.push_back({{3, 0}, 5, 7});
 
   Grid grid({{State::kClosed, State::kObstacle, State::kEmpty, State::kEmpty,
@@ -71,13 +71,13 @@ TEST_CASE("AddToOpen Function Test", "[AddToOpenTests]") {
 
 TEST_CASE("Compare Function Test", "[CompareTests]") {
   SECTION("test_1 <= test_2") {
-    Node test_1{{1, 2}, 5, 6};
-    Node test_2{{1, 3}, 5, 7};
+    Cell test_1{{1, 2}, 5, 6};
+    Cell test_2{{1, 3}, 5, 7};
     CHECK(PathFinder::Compare(test_1, test_2) == false);
   }
   SECTION("test_3 > test_4") {
-    Node test_3{{1, 2}, 5, 8};
-    Node test_4{{1, 3}, 5, 7};
+    Cell test_3{{1, 2}, 5, 8};
+    Cell test_4{{1, 3}, 5, 7};
     CHECK(PathFinder::Compare(test_3, test_4) == true);
   }
 }
@@ -119,7 +119,7 @@ TEST_CASE("IsValid Function Test", "[CheckValidCellTests]") {
 }
 
 TEST_CASE("ExpandNeighbors Function Test", "[ExpandNeighborsTests]") {
-  Node current{{4, 2}, 7, 3};
+  Cell current{{4, 2}, 7, 3};
   auto grid = Grid({{State::kClosed, State::kObstacle, State::kEmpty,
                      State::kEmpty, State::kEmpty, State::kEmpty},
                     {State::kClosed, State::kObstacle, State::kEmpty,
@@ -131,11 +131,11 @@ TEST_CASE("ExpandNeighbors Function Test", "[ExpandNeighborsTests]") {
                     {State::kClosed, State::kClosed, State::kEmpty,
                      State::kEmpty, State::kObstacle, State::kEmpty}});
   auto expected_grid = grid;
-  expected_grid.Close(current.point);
+  expected_grid.Close(current.location);
   expected_grid.Close({3, 2});
   expected_grid.Close({4, 3});
 
-  vector<Node> open{current};
+  vector<Cell> open{current};
   auto expected_open = open;
   expected_open.push_back({{3, 2}, 8, 4});
   expected_open.push_back({{4, 3}, 8, 2});

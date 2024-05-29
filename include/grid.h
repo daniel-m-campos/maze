@@ -5,20 +5,20 @@
 
 enum class State { kEmpty, kObstacle, kClosed, kPath, kStart, kFinish };
 
-struct Point {
+struct Location {
   int x;
   int y;
-  bool operator==(const Point& other) const {
+  bool operator==(const Location& other) const {
     return x == other.x && y == other.y;
   }
 };
 
-struct Node {
-  Point point{};
-  int g = 0;
+struct Cell {
+  Location location{};
+  int g{0};
   int h{};
-  bool operator==(const Node& other) const {
-    return point == other.point && g == other.g && h == other.h;
+  bool operator==(const Cell& other) const {
+    return location == other.location && g == other.g && h == other.h;
   }
 };
 
@@ -27,14 +27,14 @@ class Grid {
   Grid() { grid_ = std::vector<std::vector<State>>{}; };
   explicit Grid(const std::string& path);
   explicit Grid(const std::vector<std::vector<State>>& grid);
-  State GetState(Point point);
-  bool IsEmpty(Point point);
-  void SetAsPath(Point point);
-  void SetGoal(Point start, Point finish);
-  void Close(Point point);
-  bool IsValid(Point point);
-  int NumRows() { return grid_.size(); };
-  int NumColumns() { return grid_[0].size(); };
+  State GetState(const Location& location);
+  bool IsEmpty(const Location& location);
+  void SetAsPath(const Location& location);
+  void SetGoal(const Location& start, const Location& finish);
+  void Close(const Location& location);
+  bool IsValid(const Location& location);
+  int NumRows() const { return grid_.size(); };
+  int NumColumns() const { return grid_[0].size(); };
   static std::string CellString(State cell);
   void Print();
   bool operator==(const Grid& other) const;

@@ -37,18 +37,26 @@ Grid::Grid(const std::vector<std::vector<State>>& grid) { grid_ = grid; }
 
 Grid::Grid(const std::string& path) { grid_ = ReadBoardFile(path); }
 
-State Grid::GetState(Point point) { return grid_[point.x][point.y]; }
+State Grid::GetState(const Location& location) {
+  return grid_[location.x][location.y];
+}
 
-void Grid::SetAsPath(Point point) { grid_[point.x][point.y] = State::kPath; }
+void Grid::SetAsPath(const Location& location) {
+  grid_[location.x][location.y] = State::kPath;
+}
 
-bool Grid::IsEmpty(Point point) { return GetState(point) == State::kEmpty; }
+bool Grid::IsEmpty(const Location& location) {
+  return GetState(location) == State::kEmpty;
+}
 
-void Grid::Close(Point point) { grid_[point.x][point.y] = State::kClosed; }
+void Grid::Close(const Location& location) {
+  grid_[location.x][location.y] = State::kClosed;
+}
 
-bool Grid::IsValid(Point point) {
-  bool x_valid = point.x >= 0 && point.x < NumRows();
-  bool y_valid = point.y >= 0 && point.y < NumColumns();
-  return (x_valid && y_valid && IsEmpty(point));
+bool Grid::IsValid(const Location& location) {
+  bool x_valid = location.x >= 0 && location.x < NumRows();
+  bool y_valid = location.y >= 0 && location.y < NumColumns();
+  return (x_valid && y_valid && IsEmpty(location));
 }
 
 std::string Grid::CellString(State cell) {
@@ -75,7 +83,7 @@ void Grid::Print() {
   }
 }
 
-void Grid::SetGoal(Point start, Point finish) {
+void Grid::SetGoal(const Location& start, const Location& finish) {
   grid_[start.x][start.y] = State::kStart;
   grid_[finish.x][finish.y] = State::kFinish;
 }
