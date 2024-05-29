@@ -54,5 +54,5 @@ int main() {
   auto solution = path_finder.Search(start, goal);
   solution.Print();
 
-  std::cout << "Until next time! 👍";
+  std::cout << "Until next time! 👍\n";
 }
