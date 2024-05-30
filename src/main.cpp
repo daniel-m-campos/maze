@@ -3,7 +3,7 @@
 
 #include "path_finder.h"
 
-std::istream& operator>>(std::istream& input, Location& point) {
+std::istream &operator>>(std::istream &input, Location &point) {
   char c;
   if (input >> point.x >> c >> point.y) {
     return input;
@@ -15,7 +15,7 @@ std::istream& operator>>(std::istream& input, Location& point) {
 Grid GetGrid() {
   std::cout << "The current maze is:\n";
   Grid grid("5x6.board");
-  grid.Print();
+  grid.print();
   std::cout << "Continue with this maze? {Y|n} >> ";
   std::string input;
   getline(std::cin, input);
@@ -30,12 +30,12 @@ Grid GetGrid() {
     } while (!std::filesystem::exists(input));
     grid = Grid(input);
     std::cout << "\nMaze is:\n";
-    grid.Print();
+    grid.print();
   }
   return grid;
 }
 
-Location GetPoint(const std::string& name) {
+Location GetPoint(const std::string &name) {
   Location point{};
   std::cout << "Please provide your " << name << " \"x,y\" without quotes >> ";
   std::cin >> point;
@@ -51,8 +51,8 @@ int main() {
 
   PathFinder path_finder(grid);
   std::cout << "🔎 Searching...\n";
-  auto solution = path_finder.Search(start, goal);
-  solution.Print();
+  auto solution = path_finder.search(start, goal);
+  solution.print();
 
   std::cout << "Until next time! 👍\n";
 }

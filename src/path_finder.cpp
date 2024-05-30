@@ -4,71 +4,56 @@
 #include <iostream>
 
 #include "grid.h"
+#include <cassert>
 
-PathFinder::PathFinder() {
-  original_grid_ = Grid();
-  grid_ = original_grid_;
-  open_ = std::vector<Cell>();
-}
+PathFinder::PathFinder() : PathFinder(Grid()) {}
 
-PathFinder::PathFinder(Grid grid) {
-  original_grid_ = grid;
-  grid_ = original_grid_;
-  open_ = std::vector<Cell>();
-}
+PathFinder::PathFinder(Grid grid)
+    : open_(CompareCells()), grid_{grid}, original_grid_{grid} {}
 
-int PathFinder::Heuristic(const Location &p1, const Location &p2) {
+int PathFinder::heuristic(const Location &p1, const Location &p2) {
   return abs(p1.x - p2.x) + abs(p1.y - p2.y);
 }
 
-void PathFinder::AddToOpen(Cell cell) {
-  open_.push_back(cell);
-  grid_.Close(cell.location);
+void PathFinder::open(Cell cell) {
+  open_.push(cell);
+  grid_.setToClose(cell.location);
 }
 
-void PathFinder::ExpandNeighbors(const Cell &current, const Location &goal) {
+void PathFinder::expandNeighbors(const Cell &current, const Location &goal) {
   for (auto const [dx, dy] : deltas_) {
     Location adjacent{current.location.x + dx, current.location.y + dy};
-    if (grid_.IsValid(adjacent)) {
-      auto h2 = Heuristic(adjacent, goal);
-      AddToOpen(Cell{adjacent, current.g + 1, h2});
+    if (grid_.isValid(adjacent)) {
+      auto h2 = heuristic(adjacent, goal);
+      open(Cell{adjacent, current.g + 1, h2});
     }
   }
 }
 
-bool PathFinder::Compare(const Cell &a, const Cell &b) {
-  return a.g + a.h > b.g + b.h;
-}
-
-void PathFinder::CellSort(std::vector<Cell> *v) {
-  std::sort(v->begin(), v->end(), Compare);
-}
-
-Cell PathFinder::Current() {
-  CellSort(&open_);
-  auto next = open_.back();
-  open_.pop_back();
+Cell PathFinder::next() {
+  auto next = open_.top();
+  open_.pop();
   return next;
 }
 
-Grid PathFinder::Search(const Location &start, const Location &goal) {
+Grid PathFinder::search(const Location &start, const Location &goal) {
   grid_ = original_grid_;
-  open_ = std::vector<Cell>();
-  AddToOpen(Cell{start, 0, Heuristic(start, goal)});
+  assert(open_.empty() && "Open list should be empty!");
+  open(Cell{start, 0, heuristic(start, goal)});
   while (!open_.empty()) {
-    Cell current = Current();
-    grid_.SetAsPath(current.location);
+    Cell current = next();
+    grid_.setToPath(current.location);
     if (current.location == goal) {
-      grid_.SetGoal(start, goal);
+      grid_.setToGoal(start, goal);
       std::cout << "🤖 Found a path!\n";
       return grid_;
     }
-    ExpandNeighbors(current, goal);
+    expandNeighbors(current, goal);
   }
   std::cout << "No path found... 💩\n";
   return Grid();
 }
 
-std::vector<Cell> &PathFinder::GetOpenNodes() { return open_; }
+CellQueue &PathFinder::getOpen() { return open_; }
 
-Grid &PathFinder::GetGrid() { return grid_; }
+Grid &PathFinder::getGrid() { return grid_; }
